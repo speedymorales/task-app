@@ -8,8 +8,8 @@ import javax.persistence.Id;
 @Entity // Maps a class to a table
 public class User {
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Integer id;
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  private int id;
 
   private String name;
 
@@ -17,11 +17,11 @@ public class User {
   
   private String passwordHash;
 
-  public Integer getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(int id) {
     this.id = id;
   }
 
