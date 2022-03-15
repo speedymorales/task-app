@@ -16,11 +16,21 @@ public class User {
   private String email;
   
   private String passwordHash;
-
+  
+  private String passwordSalt;
+  
   public int getId() {
     return id;
   }
-
+  
+  public String getPasswordSalt() {
+    return passwordSalt;
+  }
+  
+  public void setPasswordSalt(String passwordSalt) {
+     this.passwordSalt = passwordSalt;
+  }
+  
   public void setId(int id) {
     this.id = id;
   }

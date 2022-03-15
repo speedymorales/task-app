@@ -1,21 +1,24 @@
 package com.taskapp.taskapp.controllers;
 
-import java.rmi.ServerException;
-import java.util.List;
 
 import com.taskapp.taskapp.dto.CreateUserDto;
+import com.taskapp.taskapp.dto.LoginDto;
+import com.taskapp.taskapp.dto.LoginResponseDto;
+import com.taskapp.taskapp.dto.UpdateUserDto;
+import com.taskapp.taskapp.dto.UpdatedUserDto;
 import com.taskapp.taskapp.dto.UserDto;
 import com.taskapp.taskapp.entities.User;
 import com.taskapp.taskapp.repositories.UserRepository;
+import com.taskapp.taskapp.services.AuthenticationService;
 import com.taskapp.taskapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,7 @@ public class UserController {
   @Autowired 
   private UserService userService;
 
+  
   @GetMapping("/users")
   public @ResponseBody Iterable<User> getUsers() {
     return userRepository.findAll();  
@@ -45,6 +49,18 @@ public ResponseEntity<UserDto> create(@RequestBody CreateUserDto req) {
 
 }
 
+@PutMapping(path = "/users/edit-user")
+public ResponseEntity<UpdatedUserDto> updateUser(@RequestBody UpdateUserDto req){
+  UpdatedUserDto response = userService.updateUser(req); 
+  return new ResponseEntity<UpdatedUserDto>(response, HttpStatus.FOUND);
+}
+
+@PostMapping(path = "users/confirm-user")
+public ResponseEntity<LoginResponseDto> create(@RequestBody LoginDto req) throws Exception {
+  LoginResponseDto response = userService.authenticateUser(req);
+  return new ResponseEntity<LoginResponseDto>(response, HttpStatus.CREATED);
+
+}
 // @Controller // This means that this class is a Controller
 // @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
 // public class MainController {
